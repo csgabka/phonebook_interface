@@ -19,7 +19,7 @@ class App extends Component {
     fetch(API)
       .then(response => response.json())
       .then(data => this.setState({ contacts: data.contacts }))
-      .catch(error => console.error(error));
+      .catch(error => console.log(error));
     }  
 
   filterContacts = (event) => {
@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   render() {
-    const {contacts} = this.state;
+    //const {contacts} = this.state;
 
     let loaded = this.state.contacts
     .filter(
@@ -46,7 +46,7 @@ class App extends Component {
     contacts.phone_number.includes(this.state.search);
     });
 
-    let filteredAndSortedAsc = this.state.contacts
+    {/*let filteredAndSortedAsc = this.state.contacts
     .sort((a, b) => { if(a.name < b.name) { return -1; } if(a.name > b.name) { return 1; } return 0; })
     .filter(
     contacts => {
@@ -62,7 +62,7 @@ class App extends Component {
     return contacts.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
     contacts.address.toLowerCase().includes(this.state.search.toLowerCase()) ||
     contacts.phone_number.includes(this.state.search);
-    });
+    });*/}
 
     return (
       <div className="App">
