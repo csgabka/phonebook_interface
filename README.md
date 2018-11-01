@@ -1,4 +1,4 @@
-!!!!PROJECT IS INCLOMPLETE!!!!
+!!!!PROJECT IS INCOMPLETE!!!!
 
 This project was created in React
 
