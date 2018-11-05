@@ -4,7 +4,7 @@ import OrderBy from './Components/OrderBy';
 import './App.css';
 import ListData from './Components/ListData';
 import FilteredAndSorted from './Components/FilteredAndSorted';
-const API = "http://www.mocky.io/v2/581335f71000004204abaf83";
+const API = "https://www.mocky.io/v2/581335f71000004204abaf83";
 
 class App extends Component {
 
