@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SearchBox from './Components/SearchBox';
 import OrderBy from './Components/OrderBy';
 import './App.css';
+import ListData from './Components/ListData';
+import FilteredAndSorted from './Components/FilteredAndSorted';
 const API = "http://www.mocky.io/v2/581335f71000004204abaf83";
 
 class App extends Component {
@@ -11,9 +13,9 @@ class App extends Component {
     this.state = {
     search: '',
     contacts: [],
-    sortBy: 'Ascending',
-    }
+    direction: 'notsorted'
   }
+}
 
   componentDidMount() {
     fetch(API)
@@ -23,65 +25,38 @@ class App extends Component {
     }  
 
   filterContacts = (event) => {
+    const {contacts} = this.state;
     this.setState({ search: event.target.value });
   }
 
-  sortIt = (event) => {
-    if ((this.state.sortBy) === 'Ascending'){
-      this.setState({ sortBy: 'Descending' });
-    }
-    else {
-      this.setState({ sortBy: 'Ascending'});
-    }
+  sortIt = (direction) => {
+   if ((direction) === 'Ascending') {
+    this.setState ({direction: 'Ascending'})
+   }
+   else if ((direction) === 'Descending') {
+    this.setState ({direction: 'Descending'})
+   }
+   else {
+    this.setState({direction: 'notsorted'})
+   }
   }
 
-  render() {
-    //const {contacts} = this.state;
-
-    let loaded = this.state.contacts
-    .filter(
-    contacts => {
-    return contacts.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.address.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.phone_number.includes(this.state.search);
-    });
-
-    {/*let filteredAndSortedAsc = this.state.contacts
-    .sort((a, b) => { if(a.name < b.name) { return -1; } if(a.name > b.name) { return 1; } return 0; })
-    .filter(
-    contacts => {
-    return contacts.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.address.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.phone_number.includes(this.state.search);
-    });
-
-    let filteredAndSortedDesc = this.state.contacts
-    .sort((a, b) => { if(a.name > b.name) { return -1; } if(a.name < b.name) { return 1; } return 0; })
-    .filter(
-    contacts => {
-    return contacts.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.address.toLowerCase().includes(this.state.search.toLowerCase()) ||
-    contacts.phone_number.includes(this.state.search);
-    });*/}
-
+    render() {
+    const {contacts, search, direction} = this.state;
     return (
       <div className="App">
-      
           <h1>Phonebook</h1>
-          <div class="container">
-               <div class="row">
-                  <div class="col">
-                  <OrderBy sortIt={this.sortIt} sortBy={this.state.sortBy}/>
-                  {loaded.map(contacts => //"loaded" replaced with "filteredAndSortedAsc" or "filteredAndSortedDesc" works
-                  <ul className="gradient_text"> {/*need to activate this with onClick*/}
-                  <li>Name: {contacts.name}</li>
-                  <li>Phone: {contacts.phone_number}</li>
-                  <li>Address: {contacts.address}</li>
-                  <hr />
-                  </ul>
-                  )}
+          <div className="container">
+               <div className="row">
+                  <div className="col">
+                  <OrderBy sortIt={this.sortIt}/>
+                  {(direction === 'notsorted') ?
+                  <ListData contacts={contacts} search={search}/>
+                  :
+                  <FilteredAndSorted contacts={contacts} search={search} sortIt={this.sortIt}
+                  direction={direction}/>}
                   </div>
-                   <div class="col">
+                   <div className="col">
                    <SearchBox filterContacts={this.filterContacts}/>
                   </div>
                </div>
