@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import SearchBox from './Components/SearchBox';
 import OrderBy from './Components/OrderBy';
 import './App.css';
-import ListData from './Components/ListData';
 import FilteredAndSorted from './Components/FilteredAndSorted';
+import AddNewContact from './Components/AddNewContact';
+import EditContact from './Components/EditContact';
+import NavBar from './Components/NavBar';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 const API = "https://www.mocky.io/v2/581335f71000004204abaf83";
 
 class App extends Component {
@@ -13,7 +16,11 @@ class App extends Component {
     this.state = {
     search: '',
     contacts: [],
-    direction: 'notsorted'
+    name: '',
+    phone_number: '',
+    address: '',
+    direction: 'notsorted',
+    form: 'add'
   }
 }
 
@@ -41,28 +48,71 @@ class App extends Component {
    }
   }
 
+  addContact = (contact) => {
+    let contacts = [...this.state.contacts, contact];
+    this.setState ({
+      contacts: contacts
+    })
+  }
+
+  deleteContact = (id) => {
+    let contacts = this.state.contacts.filter(contact => {
+      return contact.name !== id
+    });
+    this.setState({
+      contacts: contacts
+    })
+
+  }
+
+  editContact = (value) => {
+    let contacts = this.state.contacts.filter(contact => {
+     console.log(contact.name !== value)
+    });
+    console.log(value);
+
+  }
+
+  saveContact = (name) => {
+    console.log(name);
+  }
+
     render() {
     const {contacts, search, direction} = this.state;
     return (
+      <BrowserRouter>
       <div className="App">
+      <NavBar />
           <h1>Phonebook</h1>
           <div className="container">
-               <div className="row">
-                  <div className="col">
-                  <OrderBy sortIt={this.sortIt}/>
-                  {(direction === 'notsorted') ?
-                  <ListData contacts={contacts} search={search}/>
-                  :
-                  <FilteredAndSorted contacts={contacts} search={search} sortIt={this.sortIt}
-                  direction={direction}/>}
-                  </div>
-                   <div className="col">
-                   <SearchBox filterContacts={this.filterContacts}/>
-                  </div>
-               </div>
+               <Switch>
+               <Route exact path='/' render={(routeProps) => (
+                <div>
+                <SearchBox filterContacts={this.filterContacts}/>
+                <OrderBy sortIt={this.sortIt}/>
+                <FilteredAndSorted contacts={contacts} search={search} deleteContact={this.deleteContact} sortIt={this.sortIt}
+                  direction={direction} filteredContacts={this.state.filteredContacts} editContact={this.editContact}/>
+                </div>
+                   )} />
+                </Switch>
+                <Switch>
+                  <Route exact path='/add' render={(routeProps) => (<AddNewContact addContact={this.addContact} editContact={this.editContact}  contact={this.state.contacts}/> )} />
+                </Switch>
+                <Switch>
+                  <Route exact path='/edit' render={(routeProps) => (
+                  <div>
+                  <SearchBox filterContacts={this.filterContacts}/>
+                  <EditContact contacts={contacts} search={search} deleteContact={this.deleteContact} sortIt={this.sortIt}
+                  direction={direction} filteredContacts={this.state.filteredContacts} editContact={this.editContact}/>
+                  
+                  </div> )} />
+                  
+                </Switch>
+                         
           </div>       
        
       </div>
+      </BrowserRouter>
     );
   }
 }

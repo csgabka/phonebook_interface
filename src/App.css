@@ -6,8 +6,8 @@
 }
 
 .container {
-  background-color: #000000;
-  border: solid black 2px;
+  background-image: linear-gradient(to right, black, grey);;
+  border: solid white 2px;
   text-align: left;
 }
 
@@ -19,7 +19,7 @@ ul {
 }
 
 h1 {
-  font-size: 8vw;
+  font-size: 4vw;
   text-align: center;
   margin-left: 4%;
   margin-top: 4%;
@@ -31,6 +31,14 @@ h1 {
 
 .gradient_text {
   background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #D4AF37), color-stop(0.5, #FFD700), color-stop(1, #FFA500));
+  background-image: gradient( linear, left top, right top, color-stop(0, #D4AF37), color-stop(0.5, #FFD700), color-stop(1, #FFA500));
+  color:transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+label, h4, h3 {
+    background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #D4AF37), color-stop(0.5, #FFD700), color-stop(1, #FFA500));
   background-image: gradient( linear, left top, right top, color-stop(0, #D4AF37), color-stop(0.5, #FFD700), color-stop(1, #FFA500));
   color:transparent;
   -webkit-background-clip: text;
