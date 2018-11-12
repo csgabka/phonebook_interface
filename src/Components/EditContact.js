@@ -7,6 +7,10 @@ class EditContact extends Component {
 		super(props);
 		this.state = {
 			contacts: [],
+            name: null,
+            phone_number: null,
+            address: null,
+            index: ''
 		}
 		this.onSubmit = this.onSubmit.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,36 +25,37 @@ class EditContact extends Component {
 
     onSubmit() {
 		this.editContact(this.state);
-		//am I thinking right?
 	}
 
 	editContact(EditWithThisValue)
 	{
-		const  { contacts } = this.state;
-		const updated = {
-		...contacts, 
-		//what goes here
-		}
+		const  { contacts, name, phone_number, address, index } = this.state;
+        const updatedObj = {...contacts[index], name: name, address: address, phone_number: phone_number};
+	    const updatedContacts = [
+        ...contacts.slice(0, index),
+        updatedObj,
+        ...contacts.slice(index + 1),
+        ];
+        this.setState({contacts: updatedContacts});
+        console.log(updatedContacts);
   	}
 
-	handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
-    	[name]: value
-    });
-    console.log(this.state);
+	handleInputChange = (event, index) => {
+        this.setState ({
+        [event.target.id] : event.target.value,
+        index: index
+        });
   }
 
 	render() {
-	const { search, sortIt, sortBy, direction, deleteContact, editContact} = this.props;
-	const {name, contacts} = this.state;
-    const contactDetail = (contacts) =>
+	const { search, direction} = this.props;
+	const { contacts } = this.state;
+    const contactDetail = (contacts, index) =>
         <ul className="gradient_text" key={contacts.name}>
-        <li>Name: <input name="name" id="name" onChange={this.handleInputChange} defaultValue={contacts.name}/></li>
-        <li>Phone: <input name="phone_number" id="phone_number" onChange={this.handleInputChange} defaultValue={contacts.phone_number}/></li>
-        <li>Address: <input name="address" id="address" onChange={this.handleInputChange} defaultValue={contacts.address}/></li>
+        <li>Name: <input name="name" id="name" onChange={event => this.handleInputChange(event, index)} defaultValue={contacts.name}/></li>
+        <li>Phone: <input name="phone_number" id="phone_number" onChange={event => this.handleInputChange(event, index)} defaultValue={contacts.phone_number}/></li>
+        <li>Address: <input name="address" id="address" onChange={event => this.handleInputChange(event, index)} defaultValue={contacts.address}/></li>
+        <li>Index: {index}</li>
         <button type="button" className="btn btn-light" onClick={() => this.onSubmit()}>Save</button>
         <hr />
         </ul>

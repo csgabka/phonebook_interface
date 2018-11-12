@@ -37,7 +37,6 @@ class AddNewContact extends Component {
 	}
 
 	render() {
-	const {selectedContact} = this.props;
 	return (
 	<div className="addNewContactForm">
 	<h3>ADD NEW CONTACT</h3>
@@ -54,13 +53,13 @@ class AddNewContact extends Component {
 		    <input className="form-control" type="text" onChange={this.onChange} id="phone_number" />
 		  </div>
 		</div>
-		<div class="form-group">
-		  <label htmlFor="example-text-input" class="col-2 col-form-label">Address</label>
+		<div className="form-group">
+		  <label htmlFor="example-text-input" className="col-2 col-form-label">Address</label>
 		  <div className="col-10">
 		    <input className="form-control" type="text" onChange={this.onChange} id="address" />
 		  </div>
 		</div>
-		<button type="submit" class="btn btn-primary">Add</button>
+		<button type="submit" className="btn btn-primary">Add</button>
 
 		{/*{console.log(selectedContact[0])}*/}
 	</form>

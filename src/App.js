@@ -32,7 +32,6 @@ class App extends Component {
     }  
 
   filterContacts = (event) => {
-    const {contacts} = this.state;
     this.setState({ search: event.target.value });
   }
 
@@ -65,14 +64,6 @@ class App extends Component {
 
   }
 
-  editContact = (value) => {
-    let contacts = this.state.contacts.filter(contact => {
-     console.log(contact.name !== value)
-    });
-    console.log(value);
-
-  }
-
   saveContact = (name) => {
     console.log(name);
   }
@@ -94,23 +85,15 @@ class App extends Component {
                   direction={direction} filteredContacts={this.state.filteredContacts} editContact={this.editContact}/>
                 </div>
                    )} />
-                </Switch>
-                <Switch>
                   <Route exact path='/add' render={(routeProps) => (<AddNewContact addContact={this.addContact} editContact={this.editContact}  contact={this.state.contacts}/> )} />
-                </Switch>
-                <Switch>
                   <Route exact path='/edit' render={(routeProps) => (
                   <div>
                   <SearchBox filterContacts={this.filterContacts}/>
                   <EditContact contacts={contacts} search={search} deleteContact={this.deleteContact} sortIt={this.sortIt}
                   direction={direction} filteredContacts={this.state.filteredContacts} editContact={this.editContact}/>
-                  
                   </div> )} />
-                  
-                </Switch>
-                         
+                 </Switch>
           </div>       
-       
       </div>
       </BrowserRouter>
     );

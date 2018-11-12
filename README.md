@@ -13,4 +13,4 @@ ADD
 - Adding new contacts to the existing ones
 
 EDIT
-- Editing existing contacts !This feature is not fully working yet!
+- Editing existing contacts

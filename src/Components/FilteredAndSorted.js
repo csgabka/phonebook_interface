@@ -7,7 +7,6 @@ const filteredAndSorted = ({contacts, search, sortIt, sortBy, direction, deleteC
         <li>Name: {contacts.name}</li>
         <li>Phone: {contacts.phone_number}</li>
         <li>Address: {contacts.address}</li>
-        <li>Id: {contacts.name}</li>
         <button type="button" className="btn btn-light" onClick={() => deleteContact(contacts.name)}>delete</button>
         <hr />
         </ul>
